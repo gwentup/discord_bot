@@ -13,6 +13,6 @@ if (!fs.existsSync(config.dataFolder)) {
 // Print to console the full config in dev mode
 if (!config.isProductionMode()) {
 	logger.info("Loaded configuration:");
-	logger.info(config);
+	// logger.info(config);
 	logger.info();
 }
