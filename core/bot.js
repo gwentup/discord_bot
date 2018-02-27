@@ -55,11 +55,9 @@ client.on('message', msg => {
                     .send(`There was a problem finding your profile. Please try again later`)
                 }
                 else if(resp.type === 'BOT_FIND_PLAYER_SUCCESS'){
-                  msg.channel.send(`${msg.member}`)
+                  msg.channel.send(`${msg.member}`);
                   let d = resp.data;
                   let res = d.results[0];
-                  // msg.channel.send(`${msg.member}`)
-                  console.log('resp', d.results);
                   msg.channel.send({embed: {
                     color: 0xdfda13,
                     author: {
