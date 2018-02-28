@@ -58,7 +58,8 @@ client.on('message', msg => {
                   let fields = d.results.map( ele => {
                     return {
                       name: ele.OnlineMode === 1 ? 'Ranked': 'Pro',
-                      value: `MMR: ${ele.Mmr} #${ele.Position}\nW/L/D: ${ele.Win}/${ele.Lose}/${ele.Draw} (${ele.WinRate}%)`
+                      value: `MMR: ${ele.Mmr} #${ele.Position}\nW/L/D: ${ele.Win}/${ele.Lose}/${ele.Draw} (${ele.WinRate}%)`,
+                      inline: true
                     };
                   });
 
