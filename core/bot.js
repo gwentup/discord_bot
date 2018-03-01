@@ -4,6 +4,7 @@ let logger 		= require("../core/logger");
 let rp = require('request-promise');
 
 let Discord = require('discord.js');
+let chalk 	  = require("chalk");
 
 // Initialize Discord Bot
 var client = new Discord.Client();
@@ -111,6 +112,12 @@ client.on('message', msg => {
                   })
                   .then(msgReply => {
                     msgReply.delete(60000);
+                  })
+                  .catch( err => {
+                    logger.info();
+                    logger.info(chalk.bold("---------------------[ Message Error at %s Uptime: %s ]---------------------------"),
+                      moment().format("YYYY-MM-DD HH:mm:ss.SSS"), moment.duration(process.uptime() * 1000).humanize());
+                    logger.info(chalk.bold("Error Message: ") +  err.message);
                   });
                 }
               })
