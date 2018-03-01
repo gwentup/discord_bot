@@ -19,9 +19,10 @@
   },
   "homepage": "https://github.com/lrossy/discord_bot#readme",
   "dependencies": {
+    "bufferutil": "^3.0.3",
     "chalk": "^2.3.1",
-    "discord.io": "github:woor/discord.io#gateway_v6",
     "discord.js": "^11.3.0",
+    "erlpack": "github:discordapp/erlpack",
     "ioredis": "^3.2.2",
     "lodash": "^4.17.5",
     "mkdirp": "^0.5.1",
@@ -29,6 +30,8 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "uuid-token-generator": "^1.0.0",
-    "winston": "^2.4.0"
+    "uws": "^9.14.0",
+    "winston": "^2.4.0",
+    "zlib-sync": "^0.1.4"
   }
 }

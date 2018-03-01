@@ -27,7 +27,12 @@ client.on('message', msg => {
 
     switch (cmd) {
       case 'ping':
-        msg.channel.send(`${msg.member} Pong.`);
+        msg.channel.send(`${msg.member} Pong.`)
+          .then(msgReply => {
+            msgReply.delete(5000);
+        });
+
+
         break;
       case 'profile':
         if(profile_name){
@@ -56,9 +61,31 @@ client.on('message', msg => {
                   let d = resp.data;
                   let res = d.results[0];
                   let fields = d.results.map( ele => {
+                    let nameField = 'ONLINE_MODE';
+                    switch (ele.OnlineMode) {
+                      case 0:
+                        nameField = 'Casual';
+                        break;
+                      case 1:
+                        nameField = 'Ranked';
+                        break;
+                      case 3:
+                        nameField = 'Pro';
+                        break;
+                      case 4:
+                        nameField = 'Arena';
+                        break;
+                      default:
+                        nameField = 'Unknown';
+                    }
+                    let mmr = '';
+                    if(ele.Mmr){
+                       mmr = `MMR: ${ele.Mmr} #${ele.Position}\n`;
+                    }
+                    let val = `${mmr}W/L/D: ${ele.Win}/${ele.Lose}/${ele.Draw} (${ele.WinRate}%)`;
                     return {
-                      name: ele.OnlineMode === 1 ? 'Ranked': 'Pro',
-                      value: `MMR: ${ele.Mmr} #${ele.Position}\nW/L/D: ${ele.Win}/${ele.Lose}/${ele.Draw} (${ele.WinRate}%)`,
+                      name: nameField,
+                      value: val,
                       inline: true
                     };
                   });
@@ -81,16 +108,25 @@ client.on('message', msg => {
                       text: "© Gwent.io"
                     }
                   }
+                  })
+                  .then(msgReply => {
+                    msgReply.delete(60000);
                   });
                 }
               })
               .catch( err  => {
                 console.log('err', err.error);
                 if(err.error && err.error[0] && err.error[0].type === 'BOT_FIND_PLAYER_ERROR'){
-                  msg.channel.send(`${msg.member} ${profile_name} was not found`);
+                  msg.channel.send(`${msg.member} ${profile_name} was not found`)
+                  .then(msgReply => {
+                    msgReply.delete(60000);
+                  });
                 }
                 else{
-                  msg.channel.send(`${msg.member} There was a problem, please try again later`);
+                  msg.channel.send(`${msg.member} There was a problem, please try again later`)
+                  .then(msgReply => {
+                    msgReply.delete(60000);
+                  });
                 }
               })
 
@@ -118,6 +154,9 @@ client.on('message', msg => {
             text: "© Gwent.io"
           }
         }
+        })
+        .then(msgReply => {
+          msgReply.delete(60000);
         });
         break;
     }
