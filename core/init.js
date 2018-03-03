@@ -6,9 +6,9 @@ let fs		= require("fs");
 let mkdirp 	= require("mkdirp");
 
 // Create data folder if not exist
-if (!fs.existsSync(config.dataFolder)) {
-	mkdirp.sync(config.dataFolder);
-}
+// if (!fs.existsSync(config.dataFolder)) {
+// 	mkdirp.sync(config.dataFolder);
+// }
 
 // Print to console the full config in dev mode
 if (!config.isProductionMode()) {

@@ -5,11 +5,12 @@ let rp = require('request-promise');
 
 let Discord = require('discord.js');
 let chalk 	  = require("chalk");
+let moment 	  = require("moment");
 
 // Initialize Discord Bot
 var client = new Discord.Client();
 
-var icon = 'https://gwentup.com/favicon.png';
+var icon = 'https://gwentup.com/logo-bot.png';
 
 client.login(config.authKeys.discord.token);
 
@@ -27,14 +28,7 @@ client.on('message', msg => {
     let profile_name = args[0] ? args[0]: false;
 
     switch (cmd) {
-      case 'ping':
-        msg.channel.send(`${msg.member} Pong.`)
-          .then(msgReply => {
-            msgReply.delete(5000);
-        });
 
-
-        break;
       case 'profile':
         if(profile_name){
             var options = {
@@ -83,30 +77,30 @@ client.on('message', msg => {
                     if(ele.Mmr){
                        mmr = `MMR: ${ele.Mmr} #${ele.Position}\n`;
                     }
-                    let val = `${mmr}W/L/D: ${ele.Win}/${ele.Lose}/${ele.Draw} (${ele.WinRate}%)`;
+                    let val = `${mmr}W-L-D: ${ele.Win}-${ele.Lose}-${ele.Draw} (${ele.WinRate}%)`;
                     return {
                       name: nameField,
                       value: val,
-                      inline: true
+                      inline: false
                     };
                   });
 
                   msg.channel.send(msg.member, {
                     embed: {
                     color: 0xdfda13,
-                    author: {
-                      name: client.user.username,
-                      icon_url: icon
-                    },
+                    // author: {
+                    //   name: client.user.username,
+                    //   icon_url: icon
+                    // },
                     title: resp.data.name,
 
                     url: resp.data.url,
-                    // description: "The following commands are available",
+                    // description: "This message will automatically delete itself in 60 seconds",
                     fields,
                     timestamp: new Date(),
                     footer: {
                       icon_url: icon,
-                      text: "© Gwent.io"
+                      text: "© Gwentup.com"
                     }
                   }
                   })
@@ -117,8 +111,8 @@ client.on('message', msg => {
                     logger.info();
                     logger.info(chalk.bold("---------------------[ Message Error at %s Uptime: %s ]---------------------------"),
                       moment().format("YYYY-MM-DD HH:mm:ss.SSS"), moment.duration(process.uptime() * 1000).humanize());
-                    logger.info(chalk.bold("Error Message: ") +  err.message);
-                  });
+                    logger.info(chalk.bold("Error Message: ") + err.reason);
+                    logger.info(chalk.bold("Error code: ") + err.code);                  });
                 }
               })
               .catch( err  => {
@@ -137,33 +131,39 @@ client.on('message', msg => {
                 }
               })
 
-          break;
         }
+        break;
 
       default :
         msg.channel.send(msg.member, {embed: {
           color: 0xdfda13,
-          author: {
-            name: client.user.username,
-            icon_url: icon
-          },
-          title: `GwentUP stats bot`,
-
           url: `https://gwentup.com/`,
-          description: "The following commands are available",
+          description: `The following commands are available\n
+          `,
           fields: [
-            {name: '!profile <profile_name>', value: `Example: !profile boukers`},
-            {name: '!ping', value: `Check if bot is alive`}
+            {name: '!profile %nickname% - Request of profile', value: `ex: !profile boukers`},
+            {
+              name: '!gwentup',
+              value: `Support us and get bonuses on [patreon](http://patreon.com/gwentup)`
+            }
           ],
           timestamp: new Date(),
           footer: {
             icon_url: icon,
-            text: "© Gwent.io"
+            text: `© Gwentup`
           }
         }
         })
         .then(msgReply => {
           msgReply.delete(60000);
+        })
+        .catch( err =>{
+          logger.info();
+          logger.info(chalk.bold("---------------------[ Message Error at %s Uptime: %s ]---------------------------"),
+            moment().format("YYYY-MM-DD HH:mm:ss.SSS"), moment.duration(process.uptime() * 1000).humanize());
+          logger.info(chalk.bold("Error Message: ") + err.reason);
+          console.log(err)
+          logger.info(chalk.bold("Error code: ") + err.code);
         });
         break;
     }
