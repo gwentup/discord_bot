@@ -1,6 +1,7 @@
 "use strict";
 
 let pkg 	= require("../package.json");
+let conf = require("./config-file");
 
 module.exports = {
 	app: {
@@ -9,7 +10,7 @@ module.exports = {
   authKeys: {
 
     discord: {
-      "token": process.env.discord_secret
+      "token": conf.discord_secret
     }
   }
 };

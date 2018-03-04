@@ -2,19 +2,20 @@
 
 let path = require("path");
 let pkg = require("../package.json");
+let conf = require("./config-file");
 
 module.exports = {
 	app: {
 		title: pkg.title,
 		version: pkg.version,
 		description: pkg.description,
-		url: "http://localhost:" + (process.env.PORT || 3000) + "/",
+		url: "http://localhost:" + (conf.port || 3000) + "/",
 		//googleAnalyticsID: 'UA-xxxxx-x',
 		contactEmail: "lrossy@gmail.com"
 	},
 
-	ip: process.env.NODE_IP || "0.0.0.0",
-	port: process.env.PORT || 3000,
+	ip: conf.ip || "0.0.0.0",
+	port: conf.port || 3000,
 
 	rootPath: global.rootPath,
 	dataFolder: path.join(global.rootPath, "data"),
@@ -25,13 +26,13 @@ module.exports = {
 
   authKeys: {
     discord: {
-      "token": process.env.discord_secret
+      "token": conf.discord_secret
     }
   },
   
 	redis: {
 		enabled: false,
-		uri: process.env.REDIS_URI || "redis://localhost:6379",
+		uri: conf.redis_uri || "redis://localhost:6379",
 		options: null
 	},
 
