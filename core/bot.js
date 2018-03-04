@@ -172,7 +172,14 @@ client.on('message', msg => {
 });
 
 function getUtmTags(msg) {
-  return `utm_source=discord&utm_campaign=${msg.guild.name}&utm_content=${msg.channel.name}`;
+  let result = 'utm_source=discord';
+  if (msg && msg.guild) {
+    result += '&utm_campaign=' + msg.guild.name;
+    if (msg.channel) {
+      result += '&utm_content=' + msg.channel.name;
+    }
+  }
+  return result;
 }
 
 
