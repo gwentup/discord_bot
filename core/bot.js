@@ -105,7 +105,7 @@ client.on('message', msg => {
                   }
                   })
                   .then(msgReply => {
-                    msgReply.delete(60000);
+                    msgReply.delete(300000);
                   })
                   .catch( err => {
                     logger.info();
