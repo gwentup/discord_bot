@@ -135,7 +135,7 @@ client.on('message', msg => {
       }
       break;
 
-    default :
+    case 'gwentup' :
       msg.channel.send(msg.member, {embed: {
         color: 0xdfda13,
         url: `https://gwentup.com/?` + getUtmTags(msg),
