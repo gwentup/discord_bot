@@ -174,9 +174,9 @@ client.on('message', msg => {
 function getUtmTags(msg) {
   let result = 'utm_source=discord';
   if (msg && msg.guild) {
-    result += '&utm_campaign=' + msg.guild.name;
+    result += '&utm_campaign=' + encodeURIComponent(msg.guild.name);
     if (msg.channel) {
-      result += '&utm_content=' + msg.channel.name;
+      result += '&utm_content=' + encodeURIComponent(msg.channel.name);
     }
   }
   return result;
