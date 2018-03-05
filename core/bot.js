@@ -93,8 +93,7 @@ client.on('message', msg => {
                   //   name: client.user.username,
                   //   icon_url: icon
                   // },
-                  title: resp.data.name,
-
+                  title: `${resp.data.name}. Go to profile →`,
                   url: resp.data.url + '?' + getUtmTags(msg),
                   // description: "This message will automatically delete itself in 60 seconds",
                   fields,
@@ -156,7 +155,7 @@ client.on('message', msg => {
       }
       })
       .then(msgReply => {
-        msgReply.delete(60000);
+        msgReply.delete(180000);
       })
       .catch( err =>{
         logger.info();
